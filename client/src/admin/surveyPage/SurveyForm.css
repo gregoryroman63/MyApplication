@@ -1,0 +1,33 @@
+.row.match-height{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color:#08d894;
+    /* background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzNB2BoP7d2BmrLVOikYxKB2VtLVF4AHeEojxvhEYR1tLZ8lrLhQ)no-repeat center center;
+    background-size: contain; */
+    opacity: .8;
+}
+#feedback{
+    width: 100%;
+}
+.form-control{
+    background: black !important;
+    color: lawngreen !important;
+    border-color: #08d894 !important;
+}
+#feedbackButton{
+    width: fit-content;
+    float: right;
+}
+button{
+    background: transparent;
+    border-color: #08d894 !important;
+    color: #08d894;
+}
+.labels{
+    color: #08d894;
+    font-weight: bold;
+}
