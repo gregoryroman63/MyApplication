@@ -2,7 +2,6 @@ import React from "react";
 import "./SurveyForm.css";
 import { NotificationManager } from "react-notifications";
 import { postFeedback } from "./../../services/SurveyForm.service.js";
-import SurveyNavBar from "./SurveyNavBar";
 
 class SurveyForm extends React.Component {
   state = {
@@ -54,6 +53,9 @@ class SurveyForm extends React.Component {
       })
       .catch(err => console.error(err));
   };
+  cancle = () => {
+    this.props.hideForm(false);
+  };
   handleInputs = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -69,8 +71,7 @@ class SurveyForm extends React.Component {
     } = this.state;
     const { handleInputs, submitFeedback } = this;
     return (
-      <div id="surveyContainer">
-        <SurveyNavBar />
+      <React.Fragment>
         <div className="row match-height">
           <div className="col-md-12">
             <div className="">
@@ -214,6 +215,16 @@ class SurveyForm extends React.Component {
                               <i className="icon-note" /> Submit Feedback
                             </button>
                           </div>
+                          <div id="cancelButton">
+                            <button
+                              type="button"
+                              className="btn"
+                              onClick={this.cancle}
+                              id="cancelBtn"
+                            >
+                              <i className="icon-note" /> Cancel
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -223,7 +234,8 @@ class SurveyForm extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+        {/* </div> */}
+      </React.Fragment>
     );
   }
 }

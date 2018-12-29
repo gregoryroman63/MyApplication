@@ -9,7 +9,8 @@ class SurveyNavBar extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      search: ""
     };
   }
   toggle() {
@@ -17,35 +18,46 @@ class SurveyNavBar extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
-  handleOnChangeInput = () => {};
+  handleSearchInput = e => {
+    this.setState({ search: e.target.value });
+  };
+  searchOnClick = e => {
+    e.preventDefault();
+  };
   render() {
     return (
       <React.Fragment>
         <div>
-          <nav className="navbar navbar-expand-md ">
+          <nav className="navbar navbar-expand-md" id="navBar">
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem id="navItemHome">
-                  <NavLink to={"/"}>Home</NavLink>
+                  <NavLink to={"/"} className="navLinks">
+                    Home
+                  </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={"/admin/businessContainer"}>Cohorts</NavLink>
+                  <NavLink to={"/admin/businessContainer"} className="navLinks">
+                    Cohorts
+                  </NavLink>
                 </NavItem>
                 <NavItem>
                   <div className="input-group col-md-12">
                     <input
-                      className="form-control py-2"
+                      className="form-control py-2 navSearch"
                       type="search"
-                      value="search"
-                      id="example-search-input"
-                      onChange={this.handleOnChangeInput}
-                      placeholder="Search for cohort number (e.g. 63)"
+                      value={this.state.search}
+                      id="search"
+                      onChange={this.handleSearchInput}
+                      placeholder="Search by cohort #"
                     />
                     <span className="input-group-append">
                       <button
+                        id="searchBtn"
                         className="btn btn-outline-secondary"
-                        type="button"
+                        type="submit"
+                        onClick={this.searchOnClick}
                       >
                         <span className="input-group-addon">
                           <span className="glyphicon glyphicon-search" />

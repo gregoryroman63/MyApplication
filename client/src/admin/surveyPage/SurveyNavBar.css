@@ -1,3 +1,42 @@
+/* @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css'); */
 #navItemHome{
     margin-right: 1rem;
 }
+#navBar{
+    height: 5rem;
+}
+.navSearch{
+    /* font-size: 1.5rem !important; */
+    background: transparent !important;
+    color: white !important;
+}
+.glyphicon-search{
+    font-size: 1.5rem;
+    color: white;
+}
+#searchBtn{
+    border: 1px solid white;
+}
+.navLinks{
+    color:white !important;
+}
+/* @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css');
+#navItemHome{
+    margin-right: 1rem;
+}
+#navBar{
+    height: 8rem;
+    font-size: 2rem;
+}
+.navSearch{
+    font-size: 1.5rem !important;
+    background: transparent !important;
+    color: white;
+}
+.glyphicon-search{
+    font-size: 2rem;
+    color: white;
+}
+#searchBtn{
+    border: none;
+} */

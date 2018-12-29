@@ -5,7 +5,7 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    color:#08d894;
+    color:white;
     opacity: .8;
 }
 #surveyContainer{
@@ -19,9 +19,9 @@
     width: 100%;
 }
 .surveyInputs{
-    background: black !important;
-    color: lawngreen !important;
-    border-color: #08d894 !important;
+    background: white !important;
+    color: black !important;
+    border-color: white !important;
 }
 #feedbackButton{
     width: fit-content;
@@ -29,15 +29,25 @@
 }
 #feedbackBtn{
     background: transparent;
-    border-color: #08d894 !important;
-    color: #08d894;
+    border-color: white !important;
+    color: white;
+}
+#cancelButton{
+    width: fit-content;
+    float: right;
+    margin-right: 1rem;
+}
+#cancelBtn{
+    background: transparent;
+    border-color: white !important;
+    color: white;
 }
 .labels{
-    color: #08d894;
+    color: white;
 }
 .range{
     font-style: italic;
 }
-.form{
-    background: black;
+.card-body{
+    background: darkgrey;
 }
