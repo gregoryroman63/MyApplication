@@ -1,5 +1,5 @@
 using System;
-
+using PersonalProject.Services;
 using Unity;
 
 namespace PersonalProject
@@ -42,6 +42,7 @@ namespace PersonalProject
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<IFeedbackPageService, FeedbackPageService>();
         }
     }
 }

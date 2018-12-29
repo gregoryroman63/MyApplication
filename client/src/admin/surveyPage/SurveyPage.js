@@ -1,30 +1,32 @@
 import React from "react";
 import "./SurveyPage.css";
-import SurveyForm from "./SurveyForm";
+import SunsetWaveVideo from "./../../assets/writingOnBoard.mp4";
+import SurveyPageBkGdVideo from "./SurveyPageBkGdVideo";
+import SurveyNavBar from "./SurveyNavBar";
 
 class SurveyPage extends React.Component {
-  state = {
-    showForm: false
-  };
   handleButtonClick = () => {
-    this.setState({ showForm: true });
+    this.props.history.push(`/surveyform`);
   };
   render() {
     return (
       <React.Fragment>
-        <SurveyForm />
-        {/* {!this.state.showForm ? (
-          <button
-            id="signupContainer"
-            type="button"
-            className="btn btn-outline-success btn-lg"
-            onClick={this.handleButtonClick}
-          >
-            Sign Up Today
-          </button>
-        ) : (
-          <SurveyForm />
-        )} */}
+        <SurveyPageBkGdVideo src={SunsetWaveVideo} />
+        <div id="videoOverlay">
+          <SurveyNavBar />
+          <div id="content">
+            <h1 id="fancyFontH1">It's That Time In The Evening Again</h1>
+            <p id="fancyFontP">It is time to do Code Talks! </p>
+            <button
+              id="fillOutFeedbackBtn"
+              type="button"
+              className="btn btn-lg"
+              onClick={this.handleButtonClick}
+            >
+              Fill Out Feedback Form
+            </button>
+          </div>
+        </div>
       </React.Fragment>
     );
   }

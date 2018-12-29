@@ -6,14 +6,19 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     color:#08d894;
-    /* background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzNB2BoP7d2BmrLVOikYxKB2VtLVF4AHeEojxvhEYR1tLZ8lrLhQ)no-repeat center center;
-    background-size: contain; */
     opacity: .8;
+}
+#surveyContainer{
+    background:
+        url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/cW5lDBG/videoblocks-abstract-programming-code-background-software-development-concept_bdh5fisnx_thumbnail-full01.png") no-repeat center center fixed;
+    background-size: cover;
+    width: 100%;
+    height: 45rem;
 }
 #feedback{
     width: 100%;
 }
-.form-control{
+.surveyInputs{
     background: black !important;
     color: lawngreen !important;
     border-color: #08d894 !important;
@@ -22,12 +27,17 @@
     width: fit-content;
     float: right;
 }
-button{
+#feedbackBtn{
     background: transparent;
     border-color: #08d894 !important;
     color: #08d894;
 }
 .labels{
     color: #08d894;
-    font-weight: bold;
+}
+.range{
+    font-style: italic;
+}
+.form{
+    background: black;
 }
