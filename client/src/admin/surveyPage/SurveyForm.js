@@ -2,6 +2,7 @@ import React from "react";
 import "./SurveyForm.css";
 import { NotificationManager } from "react-notifications";
 import { postFeedback } from "./../../services/SurveyForm.service.js";
+import { withRouter } from "react-router-dom";
 
 class SurveyForm extends React.Component {
   state = {
@@ -50,10 +51,11 @@ class SurveyForm extends React.Component {
           "Thank-you For Your Feedback"
         );
         this.cleanForm();
+        this.props.history.push("/feedbackPage");
       })
       .catch(err => console.error(err));
   };
-  cancle = () => {
+  cancel = () => {
     this.props.hideForm(false);
   };
   handleInputs = e => {
@@ -69,7 +71,7 @@ class SurveyForm extends React.Component {
       overallPresentation,
       feedback
     } = this.state;
-    const { handleInputs, submitFeedback } = this;
+    const { handleInputs, submitFeedback, cancel } = this;
     return (
       <React.Fragment>
         <div className="row match-height">
@@ -219,7 +221,7 @@ class SurveyForm extends React.Component {
                             <button
                               type="button"
                               className="btn"
-                              onClick={this.cancle}
+                              onClick={cancel}
                               id="cancelBtn"
                             >
                               <i className="icon-note" /> Cancel
@@ -234,10 +236,9 @@ class SurveyForm extends React.Component {
             </div>
           </div>
         </div>
-        {/* </div> */}
       </React.Fragment>
     );
   }
 }
 
-export default SurveyForm;
+export default withRouter(SurveyForm);

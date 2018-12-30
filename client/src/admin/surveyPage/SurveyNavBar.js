@@ -25,12 +25,14 @@ class SurveyNavBar extends React.Component {
     e.preventDefault();
   };
   render() {
+    const { isOpen, search } = this.state;
+    const { toggle, handleSearchInput, searchOnClick } = this;
     return (
       <React.Fragment>
         <div>
           <nav className="navbar navbar-expand-md" id="navBar">
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
+            <NavbarToggler onClick={toggle} />
+            <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem id="navItemHome">
                   <NavLink to={"/"} className="navLinks">
@@ -38,7 +40,7 @@ class SurveyNavBar extends React.Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to={"/admin/businessContainer"} className="navLinks">
+                  <NavLink to={"/feedbackpage"} className="navLinks">
                     Cohorts
                   </NavLink>
                 </NavItem>
@@ -47,9 +49,9 @@ class SurveyNavBar extends React.Component {
                     <input
                       className="form-control py-2 navSearch"
                       type="search"
-                      value={this.state.search}
+                      value={search}
                       id="search"
-                      onChange={this.handleSearchInput}
+                      onChange={handleSearchInput}
                       placeholder="Search by cohort #"
                     />
                     <span className="input-group-append">
@@ -57,7 +59,7 @@ class SurveyNavBar extends React.Component {
                         id="searchBtn"
                         className="btn btn-outline-secondary"
                         type="submit"
-                        onClick={this.searchOnClick}
+                        onClick={searchOnClick}
                       >
                         <span className="input-group-addon">
                           <span className="glyphicon glyphicon-search" />

@@ -20,6 +20,13 @@ namespace PersonalProject.Controllers
             this.feedbackPageService = feedbackPageService;
         }
 
+        [HttpGet, Route]
+        public HttpResponseMessage GetAll()
+        {
+            List<FeedbackList> feedbackLists = feedbackPageService.GetAll();
+            return Request.CreateResponse(HttpStatusCode.OK, new { Item = feedbackLists });
+        }
+
         [HttpPost, Route]
         public HttpResponseMessage Create(FeedbackRequest feedbackRequest)
         {
