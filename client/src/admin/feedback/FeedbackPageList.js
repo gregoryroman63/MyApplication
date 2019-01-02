@@ -32,7 +32,7 @@ class FeedbackPageList extends React.Component {
       .then(res => {
         getFeedBacks()
           .then(res => {
-            this.setState({ feedbackList: res.data.Item });
+            this.setState({ feedbackList: res.data.Item.reverse() });
           })
           .catch(err => console.error("an error"));
       })
