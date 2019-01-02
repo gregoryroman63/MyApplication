@@ -4,11 +4,17 @@ import SunsetWaveVideo from "./../../assets/writingOnBoard.mp4";
 import SurveyPageBkGdVideo from "./SurveyPageBkGdVideo";
 import SurveyNavBar from "./SurveyNavBar";
 import SurveyForm from "./SurveyForm";
+import { connect } from "react-redux";
 
 class SurveyPage extends React.Component {
   state = {
     showForm: false
   };
+  componentDidMount() {
+    if (this.props.repopulateForm) {
+      this.setState({ showForm: this.props.repopulateForm });
+    }
+  }
   handleButtonClick = () => {
     this.setState({ showForm: true });
   };
@@ -42,5 +48,9 @@ class SurveyPage extends React.Component {
     );
   }
 }
-
-export default SurveyPage;
+function mapStateToProps(state) {
+  return {
+    repopulateForm: state.repopulateForm
+  };
+}
+export default connect(mapStateToProps)(SurveyPage);

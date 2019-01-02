@@ -2,6 +2,7 @@ import React from "react";
 import { Collapse, NavbarToggler, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import "./SurveyNavBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class SurveyNavBar extends React.Component {
   constructor(props) {
@@ -19,7 +20,9 @@ class SurveyNavBar extends React.Component {
     });
   }
   handleSearchInput = e => {
-    this.setState({ search: e.target.value });
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
+    this.props.searchForFeedbacks(value);
   };
   searchOnClick = e => {
     e.preventDefault();
@@ -49,10 +52,11 @@ class SurveyNavBar extends React.Component {
                     <input
                       className="form-control py-2 navSearch"
                       type="search"
+                      name="search"
                       value={search}
                       id="search"
                       onChange={handleSearchInput}
-                      placeholder="Search by cohort #"
+                      placeholder="Cohort # or Name"
                     />
                     <span className="input-group-append">
                       <button
@@ -61,9 +65,7 @@ class SurveyNavBar extends React.Component {
                         type="submit"
                         onClick={searchOnClick}
                       >
-                        <span className="input-group-addon">
-                          <span className="glyphicon glyphicon-search" />
-                        </span>
+                        <FontAwesomeIcon icon="search" />
                       </button>
                     </span>
                   </div>

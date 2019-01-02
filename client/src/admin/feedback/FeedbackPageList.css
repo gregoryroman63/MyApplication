@@ -7,7 +7,7 @@
 }
 #navBar{
     position: fixed;
-    right: 0;
+    right: -1.5rem;
 }
 #presentationFeedbackH1{
     color: white;
@@ -25,8 +25,11 @@
     color:white;
 }
 .spanTextShadow{
-    text-shadow: 1px 1px black;
+    color: skyblue;
 }
 #feedbackListItem{
     margin-bottom: 2rem;
+}
+.feedbackListBtn{
+    float: right;
 }

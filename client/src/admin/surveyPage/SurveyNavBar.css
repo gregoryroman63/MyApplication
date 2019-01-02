@@ -1,4 +1,3 @@
-/* @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css'); */
 #navItemHome{
     margin-right: 1rem;
 }
@@ -6,7 +5,6 @@
     height: 5rem;
 }
 .navSearch{
-    /* font-size: 1.5rem !important; */
     background: transparent !important;
     color: white !important;
 }
@@ -16,27 +14,14 @@
 }
 #searchBtn{
     border: 1px solid white;
+    height: 2.36rem;
+    border: none;
 }
 .navLinks{
     color:white !important;
 }
-/* @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css');
-#navItemHome{
-    margin-right: 1rem;
+.svg-inline--fa.fa-search.fa-w-16 {
+    width: 1.6rem;
+    height: 1.6rem;
+    color:white;
 }
-#navBar{
-    height: 8rem;
-    font-size: 2rem;
-}
-.navSearch{
-    font-size: 1.5rem !important;
-    background: transparent !important;
-    color: white;
-}
-.glyphicon-search{
-    font-size: 2rem;
-    color: white;
-}
-#searchBtn{
-    border: none;
-} */

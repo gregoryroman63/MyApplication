@@ -3,14 +3,13 @@ import { createStore } from "redux";
 function reducer(state, action) {
   if (!state) {
     return {
-      user: null
+      repopulateForm: false
     };
   }
-  if (action.type === "SET_USER") {
+  if (action.type === "SET_REPOPULATE_FORM") {
     return {
       ...state,
-      user: action.user,
-      roles: action.user.roles
+      repopulateForm: action.repopulateForm
     };
   }
 }

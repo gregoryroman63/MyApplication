@@ -3,6 +3,11 @@ import "./SurveyForm.css";
 import { NotificationManager } from "react-notifications";
 import { postFeedback } from "./../../services/SurveyForm.service.js";
 import { withRouter } from "react-router-dom";
+import {
+  getFeedBackById,
+  updateFeedback
+} from "./../../services/SurveyForm.service.js";
+import { connect } from "react-redux";
 
 class SurveyForm extends React.Component {
   state = {
@@ -12,8 +17,37 @@ class SurveyForm extends React.Component {
     presenterCohort: "",
     overallPresentation: "3",
     topicSelection: "3",
-    feedback: ""
+    feedback: "",
+    id: null
   };
+  componentDidMount() {
+    if (this.props.repopulateForm) {
+      getFeedBackById(this.props.match.params.id)
+        .then(res => {
+          const {
+            Email,
+            Feedback,
+            FullNameOfEvaluator,
+            FullNameOfPresenter,
+            Id,
+            OverallPresentation,
+            PresenterCohort,
+            TopicSelection
+          } = res.data.Item;
+          this.setState({
+            fullNameOfEvaluator: FullNameOfEvaluator,
+            fullNameOfPresenter: FullNameOfPresenter,
+            email: Email,
+            presenterCohort: PresenterCohort,
+            overallPresentation: OverallPresentation,
+            topicSelection: TopicSelection,
+            feedback: Feedback,
+            id: Id
+          });
+        })
+        .catch(err => console.error(err));
+    }
+  }
   cleanForm = () => {
     this.setState({
       fullNameOfEvaluator: "",
@@ -33,7 +67,8 @@ class SurveyForm extends React.Component {
       presenterCohort,
       overallPresentation,
       topicSelection,
-      feedback
+      feedback,
+      id
     } = this.state;
     const payload = {
       fullNameOfEvaluator,
@@ -44,18 +79,38 @@ class SurveyForm extends React.Component {
       topicSelection,
       feedback
     };
-    postFeedback(payload)
-      .then(res => {
-        NotificationManager.success(
-          "Successfully Submitted",
-          "Thank-you For Your Feedback"
-        );
-        this.cleanForm();
-        this.props.history.push("/feedbackPage");
-      })
-      .catch(err => console.error(err));
+    if (this.props.repopulateForm) {
+      payload.id = id;
+      updateFeedback(payload)
+        .then(res => {
+          NotificationManager.success(
+            "Successfully Submitted",
+            "Thank-you For Your Feedback"
+          );
+          this.cleanForm();
+          this.props.history.push("/feedbackPage");
+          this.props.setRepopulateForm(false);
+        })
+        .catch(err => console.error(err));
+    } else {
+      postFeedback(payload)
+        .then(res => {
+          NotificationManager.success(
+            "Successfully Submitted",
+            "Thank-you For Your Feedback"
+          );
+          this.cleanForm();
+          this.props.history.push("/feedbackPage");
+        })
+        .catch(err => console.error(err));
+    }
   };
   cancel = () => {
+    if (this.props.repopulateForm) {
+      this.cleanForm();
+      this.props.setRepopulateForm(false);
+      this.props.history.push("/");
+    }
     this.props.hideForm(false);
   };
   handleInputs = e => {
@@ -240,5 +295,20 @@ class SurveyForm extends React.Component {
     );
   }
 }
-
-export default withRouter(SurveyForm);
+function mapStateToProps(state) {
+  return {
+    repopulateForm: state.repopulateForm
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    setRepopulateForm: repopulateForm =>
+      dispatch({ type: "SET_REPOPULATE_FORM", repopulateForm })
+  };
+}
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SurveyForm)
+);
