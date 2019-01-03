@@ -59,10 +59,10 @@ namespace PersonalProject.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { Item = feedbackById });
         }
 
-        [HttpGet, Route]
-        public HttpResponseMessage GetAll()
+        [HttpGet, Route("getall/{pageIndex:int}/{pageSize:int}")]
+        public HttpResponseMessage GetAll(int pageIndex, int pageSize)
         {
-            List<FeedbackList> feedbackLists = feedbackPageService.GetAll();
+            List<FeedbackList> feedbackLists = feedbackPageService.GetAll(pageIndex, pageSize);
             return Request.CreateResponse(HttpStatusCode.OK, new { Item = feedbackLists });
         }
 

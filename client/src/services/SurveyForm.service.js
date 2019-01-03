@@ -5,8 +5,8 @@ const baseUrl = "/api/feedbackpage";
 export function postFeedback(payload) {
   return axios.post(baseUrl, payload);
 }
-export function getFeedBacks() {
-  return axios.get(baseUrl);
+export function getFeedBacks(pageIndex, pageSize) {
+  return axios.get(`${baseUrl}/getall/${pageIndex}/${pageSize}`);
 }
 export function getFeedBackById(id) {
   return axios.get(`${baseUrl}/${id}`);

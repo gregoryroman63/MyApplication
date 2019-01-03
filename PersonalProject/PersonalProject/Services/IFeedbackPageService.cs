@@ -9,9 +9,9 @@ namespace PersonalProject.Services
     {
         int CreateFeedback(FeedbackRequest req);
         void Delete(int id);
-        List<FeedbackList> GetAll();
+        List<FeedbackList> GetAll(int pageIndex, int pageSize);
         FeedbackById GetById(int id);
-        List<FeedbackList> Search(int pageIndex, int pageSize, string queryString);
+        List<FeedbackList> Search(int pageIndex, int pageSize, string q);
         void UpdateFeedback(FeedbackUpdateRequest req);
     }
 }

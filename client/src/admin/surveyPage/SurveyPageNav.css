@@ -1,0 +1,27 @@
+#navItemHome{
+    margin-right: 1rem;
+}
+#navBar{
+    height: 5rem;
+}
+.navSearch{
+    background: transparent !important;
+    color: white !important;
+}
+.glyphicon-search{
+    font-size: 1.5rem;
+    color: white;
+}
+#searchBtn{
+    border: 1px solid white;
+    height: 2.36rem;
+    border: none;
+}
+.navLinks{
+    color:white !important;
+}
+.svg-inline--fa.fa-search.fa-w-16 {
+    width: 1.6rem;
+    height: 1.6rem;
+    color:white;
+}

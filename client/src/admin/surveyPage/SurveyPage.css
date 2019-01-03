@@ -16,11 +16,9 @@
     position: fixed;
 }
 #fancyFontH1{
-    font-family: Brush Script MT, Brush Script Std, cursive;
     font-size: 5rem;
 }
 #fancyFontP{
-    font-family: Brush Script MT, Brush Script Std, cursive;
     font-size: 3rem;
 }
 #fillOutFeedbackBtn{

@@ -89,7 +89,7 @@ namespace PersonalProject.Services
                 cmd.ExecuteNonQuery();
             }
         }
-        public List<FeedbackList> GetAll()
+        public List<FeedbackList> GetAll(int pageIndex, int pageSize)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -97,6 +97,8 @@ namespace PersonalProject.Services
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "Feedback_GetAll";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", pageSize);
 
                 using(SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -112,6 +114,7 @@ namespace PersonalProject.Services
                         feedbackList.TopicSelection = (int)reader["TopicSelection"];
                         feedbackList.Feedback = reader["Feedback"] as string;
                         feedbackList.DateTimeCreated = (DateTime)reader["DateTimeCreated"];
+                        feedbackList.TotalRows = (int)reader["TotalRows"];
                         feedbackLists.Add(feedbackList);
                     }
                     return feedbackLists;

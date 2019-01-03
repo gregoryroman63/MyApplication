@@ -2,7 +2,7 @@ import React from "react";
 import "./SurveyPage.css";
 import SunsetWaveVideo from "./../../assets/writingOnBoard.mp4";
 import SurveyPageBkGdVideo from "./SurveyPageBkGdVideo";
-import SurveyNavBar from "./SurveyNavBar";
+import SurveyPageNav from "./SurveyPageNav";
 import SurveyForm from "./SurveyForm";
 import { connect } from "react-redux";
 
@@ -26,7 +26,7 @@ class SurveyPage extends React.Component {
       <React.Fragment>
         <SurveyPageBkGdVideo src={SunsetWaveVideo} />
         <div id="videoOverlay">
-          <SurveyNavBar />
+          <SurveyPageNav />
           {this.state.showForm ? (
             <SurveyForm hideForm={this.hideForm} />
           ) : (

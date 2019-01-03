@@ -13,13 +13,21 @@ import Paginator from "./../../shared/Paginator";
 
 class FeedbackPageList extends React.Component {
   state = {
-    feedbackList: []
+    feedbackList: [],
+    pageIndex: 0,
+    pageSize: 5,
+    totalCount: 0,
+    totalPages: 0
   };
   prefix = this.props.match.path;
   componentDidMount() {
-    getFeedBacks()
+    getFeedBacks(this.state.pageIndex, 5)
       .then(res => {
-        this.setState({ feedbackList: res.data.Item.reverse() });
+        const { Item } = res.data;
+        this.setState({
+          feedbackList: Item.reverse(),
+          totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize)
+        });
       })
       .catch(err => console.error("an error"));
   }
@@ -30,9 +38,13 @@ class FeedbackPageList extends React.Component {
   deleteFeedback = id => {
     deleteFb(id)
       .then(res => {
-        getFeedBacks()
+        getFeedBacks(this.state.pageIndex, this.state.pageSize)
           .then(res => {
-            this.setState({ feedbackList: res.data.Item.reverse() });
+            const { Item } = res.data;
+            this.setState({
+              feedbackList: Item.reverse(),
+              totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize)
+            });
           })
           .catch(err => console.error("an error"));
       })
@@ -43,8 +55,31 @@ class FeedbackPageList extends React.Component {
       .then(res => this.setState({ feedbackList: res.data.Item }))
       .catch(err => console.error(err));
   };
+  getAllFeedbacks = () => {
+    const { pageIndex, pageSize } = this.state;
+    getFeedBacks(pageIndex, pageSize).then(res => {
+      const totalCount = res.data.Item[0].TotalRows;
+      console.log(totalCount, pageSize);
+      console.log(Math.ceil(totalCount / pageSize));
+      this.setState({
+        feedbackList: res.data.Item.reverse(),
+        totalCount,
+        totalPages: Math.ceil(totalCount / pageSize)
+      });
+    });
+  };
+  goToPage = pageIndex => {
+    this.setState(
+      prev => ({
+        pageIndex
+      }),
+      () => {
+        this.getAllFeedbacks();
+      }
+    );
+  };
   render() {
-    const { feedbackList } = this.state;
+    const { feedbackList, pageIndex, totalPages } = this.state;
     const { updateFeedback, deleteFeedback } = this;
     return (
       <React.Fragment>
@@ -55,7 +90,11 @@ class FeedbackPageList extends React.Component {
               Presentation Feedback
             </h1>
             <hr id="feedbackHr" />
-            {/* <Paginator currentPage={0} totalPages={5} goTo={this.go} /> */}
+            <Paginator
+              currentPage={pageIndex}
+              totalPages={totalPages}
+              goTo={this.goToPage}
+            />
             <ul className="list-unstyled" id="feedbackUl">
               {feedbackList.length
                 ? feedbackList.map(data => (

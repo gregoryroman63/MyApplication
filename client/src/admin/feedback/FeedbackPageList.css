@@ -3,7 +3,7 @@
         url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQyse2YXCizMCl-7FmClY3OGoU3zLdqbLFGRGxafdGsk-1mN43Zg") no-repeat center center fixed;
     background-size: cover;
     width: 100%;
-    height: 100%;
+    height: 100vh;
 }
 #navBar{
     position: fixed;
@@ -11,7 +11,6 @@
 }
 #presentationFeedbackH1{
     color: white;
-    font-family: Brush Script MT, Brush Script Std, cursive;
     text-align: center;
 }
 #feedbackPageListContainer{
