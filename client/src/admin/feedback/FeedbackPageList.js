@@ -10,6 +10,7 @@ import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import Paginator from "./../../shared/Paginator";
+import DeleteModal from "./DeleteModal";
 
 class FeedbackPageList extends React.Component {
   state = {
@@ -17,7 +18,9 @@ class FeedbackPageList extends React.Component {
     pageIndex: 0,
     pageSize: 5,
     totalCount: 0,
-    totalPages: 0
+    totalPages: 0,
+    isOpen: false,
+    id: null
   };
   prefix = this.props.match.path;
   componentDidMount() {
@@ -35,20 +38,28 @@ class FeedbackPageList extends React.Component {
     this.props.setRepopulateForm(true);
     this.props.history.push(`${this.prefix}/surveypage/${id}`);
   };
-  deleteFeedback = id => {
-    deleteFb(id)
+  deleteFeedbackModal = id => {
+    this.setState({ isOpen: true, id });
+  };
+  yesDeleteFeedback = () => {
+    deleteFb(this.state.id)
       .then(res => {
         getFeedBacks(this.state.pageIndex, this.state.pageSize)
           .then(res => {
             const { Item } = res.data;
             this.setState({
               feedbackList: Item.reverse(),
-              totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize)
+              totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize),
+              id: null
             });
           })
           .catch(err => console.error("an error"));
       })
       .catch(err => console.error(err));
+    this.setState({ isOpen: false });
+  };
+  deleteCancelled = () => {
+    this.setState({ isOpen: false });
   };
   searchForFeedbacks = q => {
     searchFeedbacks(0, 10, q)
@@ -80,9 +91,15 @@ class FeedbackPageList extends React.Component {
   };
   render() {
     const { feedbackList, pageIndex, totalPages } = this.state;
-    const { updateFeedback, deleteFeedback } = this;
+    const { updateFeedback, deleteFeedbackModal } = this;
     return (
       <React.Fragment>
+        <DeleteModal
+          isOpen={this.state.isOpen}
+          yesDeleteFeedback={this.yesDeleteFeedback}
+          deleteCancelled={this.deleteCancelled}
+          centered={true}
+        />
         <div id="feedbackPageContainer">
           <SurveyNavBar searchForFeedbacks={this.searchForFeedbacks} />
           <div className="container" id="feedbackPageListContainer">
@@ -143,10 +160,10 @@ class FeedbackPageList extends React.Component {
                           onClick={() => updateFeedback(data.Id)}
                         >
                           <FontAwesomeIcon icon="edit" />
-                        </button>
+                        </button>{" "}
                         <button
                           className="box-shadow-2 btn btn-secondary feedbackListBtn"
-                          onClick={() => deleteFeedback(data.Id)}
+                          onClick={() => deleteFeedbackModal(data.Id)}
                         >
                           <FontAwesomeIcon icon="trash-alt" />
                         </button>
