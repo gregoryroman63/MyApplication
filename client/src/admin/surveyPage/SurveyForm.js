@@ -13,7 +13,7 @@ class SurveyForm extends React.Component {
   state = {
     fullNameOfEvaluator: "",
     fullNameOfPresenter: "",
-    email: "",
+    //email: "",
     presenterCohort: "",
     overallPresentation: "3",
     topicSelection: "3",
@@ -25,7 +25,7 @@ class SurveyForm extends React.Component {
       getFeedBackById(this.props.match.params.id)
         .then(res => {
           const {
-            Email,
+            //Email,
             Feedback,
             FullNameOfEvaluator,
             FullNameOfPresenter,
@@ -37,7 +37,7 @@ class SurveyForm extends React.Component {
           this.setState({
             fullNameOfEvaluator: FullNameOfEvaluator,
             fullNameOfPresenter: FullNameOfPresenter,
-            email: Email,
+            //email: Email,
             presenterCohort: PresenterCohort,
             overallPresentation: OverallPresentation,
             topicSelection: TopicSelection,
@@ -52,7 +52,7 @@ class SurveyForm extends React.Component {
     this.setState({
       fullNameOfEvaluator: "",
       fullNameOfPresenter: "",
-      email: "",
+      //email: "",
       presenterCohort: "",
       overallPresentation: "3",
       topicSelection: "3",
@@ -63,7 +63,7 @@ class SurveyForm extends React.Component {
     const {
       fullNameOfEvaluator,
       fullNameOfPresenter,
-      email,
+      //email,
       presenterCohort,
       overallPresentation,
       topicSelection,
@@ -73,7 +73,7 @@ class SurveyForm extends React.Component {
     const payload = {
       fullNameOfEvaluator,
       fullNameOfPresenter,
-      email,
+      //email,
       presenterCohort,
       overallPresentation,
       topicSelection,
@@ -93,6 +93,7 @@ class SurveyForm extends React.Component {
         })
         .catch(err => console.error(err));
     } else {
+      payload.googleId = this.props.user.id;
       postFeedback(payload)
         .then(res => {
           NotificationManager.success(
@@ -120,7 +121,7 @@ class SurveyForm extends React.Component {
     const {
       fullNameOfEvaluator,
       fullNameOfPresenter,
-      email,
+      //email,
       presenterCohort,
       topicSelection,
       overallPresentation,
@@ -154,7 +155,7 @@ class SurveyForm extends React.Component {
                             placeholder="Full Name Of Evaluator"
                           />
                         </div>
-                        <div className="form-group col-md-12 mb-2 ">
+                        {/* <div className="form-group col-md-12 mb-2 ">
                           <label className="labels" htmlFor="email">
                             Email{" "}
                             <span id="emailMessage">
@@ -170,7 +171,7 @@ class SurveyForm extends React.Component {
                             placeholder="Email"
                             className="form-control surveyInputs"
                           />
-                        </div>
+                        </div> */}
                         <div className="form-group col-md-12 mb-2">
                           <label
                             className="labels"
@@ -297,7 +298,8 @@ class SurveyForm extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    repopulateForm: state.repopulateForm
+    repopulateForm: state.repopulateForm,
+    user: state.user
   };
 }
 function mapDispatchToProps(dispatch) {

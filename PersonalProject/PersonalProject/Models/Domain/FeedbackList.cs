@@ -16,5 +16,6 @@ namespace PersonalProject.Models
         public string Feedback { get; set; }
         public DateTime DateTimeCreated { get; set; }
         public int TotalRows { get; set; }
+        public string GoogleId { get; set; }
     }
 }

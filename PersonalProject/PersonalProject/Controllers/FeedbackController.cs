@@ -22,6 +22,13 @@ namespace PersonalProject.Controllers
             this.feedbackPageService = feedbackPageService;
         }
 
+        [HttpGet, Route("authentication")]
+        public HttpResponseMessage Authenticate(string id_token="", string oAuthId="")
+        {
+            bool authorized = feedbackPageService.CheckGoogleTokenId(id_token, oAuthId);
+            return Request.CreateResponse(HttpStatusCode.OK, new { Item = authorized });
+        }
+
         [HttpDelete, Route("{id:int}")]
         public HttpResponseMessage Delete(int id)
         {

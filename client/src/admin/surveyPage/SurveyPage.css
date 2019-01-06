@@ -25,9 +25,41 @@
     background: transparent;
     color: white;
     border: 1px solid white;
-    letter-spacing: .2rem
+    letter-spacing: .2rem;
+    border-radius: 0;
+    height: 3.3rem;
 }
 #fillOutFeedbackBtn:hover{
     background: white;
     color: black;
+}
+.g-signin2{
+    display: inline-block;
+}
+.abcRioButtonSvg{
+    width: 6rem;
+    height: 2rem;
+    position: relative;
+    right: 1rem;
+}
+.abcRioButton.abcRioButtonLightBlue{
+    width:15rem !important;
+    height: 3rem !important;
+    background: transparent;
+    color: white;
+    border: 1px solid white !important;
+}
+.abcRioButtonContents{
+    font-size: 1.7rem !important;
+    line-height: 45px !important;
+}
+#not_signed_inv8ekua2wbyav{
+    margin-top: .3rem !important;
+    display: inline-block !important;
+}
+.g-signin2{
+    display: block;
+    margin: 0 auto;
+    width: 15rem;
+    margin-top: 1rem;
 }

@@ -7,6 +7,7 @@ namespace PersonalProject.Services
 {
     public interface IFeedbackPageService
     {
+        bool CheckGoogleTokenId(string id_token, string oAuthId);
         int CreateFeedback(FeedbackRequest req);
         void Delete(int id);
         List<FeedbackList> GetAll(int pageIndex, int pageSize);

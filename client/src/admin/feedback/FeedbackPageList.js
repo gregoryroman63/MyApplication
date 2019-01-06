@@ -70,8 +70,6 @@ class FeedbackPageList extends React.Component {
     const { pageIndex, pageSize } = this.state;
     getFeedBacks(pageIndex, pageSize).then(res => {
       const totalCount = res.data.Item[0].TotalRows;
-      console.log(totalCount, pageSize);
-      console.log(Math.ceil(totalCount / pageSize));
       this.setState({
         feedbackList: res.data.Item.reverse(),
         totalCount,
@@ -155,18 +153,23 @@ class FeedbackPageList extends React.Component {
                           </span>
                         </h5>
                         <p>{data.Feedback}</p>
-                        <button
-                          className="box-shadow-2 btn btn-secondary feedbackListBtn"
-                          onClick={() => updateFeedback(data.Id)}
-                        >
-                          <FontAwesomeIcon icon="edit" />
-                        </button>{" "}
-                        <button
-                          className="box-shadow-2 btn btn-secondary feedbackListBtn"
-                          onClick={() => deleteFeedbackModal(data.Id)}
-                        >
-                          <FontAwesomeIcon icon="trash-alt" />
-                        </button>
+                        {console.log(data.GoogleId, this.props.user.id)}
+                        {data.GoogleId === this.props.user.id && (
+                          <React.Fragment>
+                            <button
+                              className="box-shadow-2 btn btn-secondary feedbackListBtn"
+                              onClick={() => updateFeedback(data.Id)}
+                            >
+                              <FontAwesomeIcon icon="edit" />
+                            </button>
+                            <button
+                              className="box-shadow-2 btn btn-secondary feedbackListBtn"
+                              onClick={() => deleteFeedbackModal(data.Id)}
+                            >
+                              <FontAwesomeIcon icon="trash-alt" />
+                            </button>
+                          </React.Fragment>
+                        )}
                       </div>
                     </li>
                   ))
@@ -178,7 +181,9 @@ class FeedbackPageList extends React.Component {
     );
   }
 }
-
+function mapStateToProps(state) {
+  return { user: state.user };
+}
 function mapDispatchToProps(dispatch) {
   return {
     setRepopulateForm: repopulateForm =>
@@ -186,6 +191,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(FeedbackPageList);

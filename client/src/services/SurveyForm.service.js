@@ -20,3 +20,6 @@ export function deleteFb(id) {
 export function searchFeedbacks(pageIndex, pageSize, q) {
   return axios.get(`${baseUrl}/${pageIndex}/${pageSize}?q=${q}`);
 }
+export function authenticateUser(token, id) {
+  return axios.get(`${baseUrl}/authentication?id_token=${token}&oAuthId=${id}`);
+}

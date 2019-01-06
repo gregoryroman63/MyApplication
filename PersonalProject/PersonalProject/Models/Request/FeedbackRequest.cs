@@ -9,10 +9,10 @@ namespace PersonalProject.Models
     {
         public string FullNameOfEvaluator { get; set; }
         public string FullNameOfPresenter { get; set; }
-        public string Email { get; set; }
         public string PresenterCohort { get; set; }
         public int OverallPresentation { get; set; }
         public int TopicSelection { get; set; }
         public string Feedback { get; set; }
+        public string GoogleId { get; set; }
     }
 }
