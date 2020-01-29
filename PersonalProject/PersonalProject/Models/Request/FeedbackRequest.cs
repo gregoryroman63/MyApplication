@@ -14,5 +14,6 @@ namespace PersonalProject.Models
         public int TopicSelection { get; set; }
         public string Feedback { get; set; }
         public string GoogleId { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

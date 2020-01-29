@@ -33,7 +33,6 @@ class SurveyNavBar extends React.Component {
     e.preventDefault();
     var auth2 = window.gapi.auth2.getAuthInstance();
     auth2.signOut().then(function() {
-      console.log("User signed out.");
     });
     this.props.setUser({});
     window.open("/", "_self");
@@ -44,7 +43,17 @@ class SurveyNavBar extends React.Component {
     return (
       <React.Fragment>
         <div>
-          <nav className="navbar navbar-expand-md" id="navBar">
+          <nav className="navbar navbar-expand-md" id="surveyNavBar">
+            <img
+              src={
+                this.props.user.image ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCoVICaoWv740_veT03awpbxglZ1nXyyAZPPJno9B7uAybDCfr"
+              }
+              id="userImage"
+              alt="User"
+            />
+            <span id="welcome">Welcome,</span>
+            <span id="userName">{this.props.user.name}</span>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
@@ -58,7 +67,7 @@ class SurveyNavBar extends React.Component {
                     Cohorts
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem className="navItemHome">
                   <NavLink to={"/"} className="navLinks" onClick={this.signOut}>
                     SignOut
                   </NavLink>
@@ -99,7 +108,12 @@ function mapDispatchToProps(dispatch) {
     setUser: user => dispatch({ type: "SET_USER", user })
   };
 }
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(SurveyNavBar));

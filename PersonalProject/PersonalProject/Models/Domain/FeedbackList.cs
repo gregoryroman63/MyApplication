@@ -17,5 +17,6 @@ namespace PersonalProject.Models
         public DateTime DateTimeCreated { get; set; }
         public int TotalRows { get; set; }
         public string GoogleId { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

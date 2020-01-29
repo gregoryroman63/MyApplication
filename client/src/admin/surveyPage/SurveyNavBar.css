@@ -1,27 +1,48 @@
 .navItemHome{
     margin-right: 1rem;
 }
-#navBar{
+#surveyNavBar{
     height: 5rem;
-}
-.navSearch{
-    background: transparent !important;
-    color: white !important;
+    background: white;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 10;
 }
 .glyphicon-search{
     font-size: 1.5rem;
     color: white;
 }
 #searchBtn{
-    border: 1px solid white;
-    height: 2.36rem;
-    border: none;
+    height: 2.375rem;
+    border-radius: initial;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: none;
 }
 .navLinks{
-    color:white !important;
+    color:black !important;
 }
 .svg-inline--fa.fa-search.fa-w-16 {
     width: 1.6rem;
     height: 1.6rem;
     color:white;
+}
+#userImage{
+    border-radius: 50%;
+    width: 4%;
+}
+#userName{
+    margin-left: .2rem;
+}
+#welcome{
+    margin-left: 1rem;
+}
+#search{
+    border-radius: initial;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: none;
 }

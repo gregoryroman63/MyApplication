@@ -72,6 +72,7 @@ namespace PersonalProject.Services
                         feedbackList.TopicSelection = (int)reader["TopicSelection"];
                         feedbackList.Feedback = reader["Feedback"] as string;
                         feedbackList.DateTimeCreated = (DateTime)reader["DateTimeCreated"];
+                        feedbackList.ImageUrl = reader["ImageUrl"] as string;
                         feedbackLists.Add(feedbackList);
                     }
                     return feedbackLists;
@@ -102,6 +103,7 @@ namespace PersonalProject.Services
                     feedbackById.OverallPresentation = (int)reader["OverallPresentation"];
                     feedbackById.TopicSelection = (int)reader["TopicSelection"];
                     feedbackById.Feedback = reader["Feedback"] as string;
+                    feedbackById.ImageUrl = reader["ImageUrl"] as string;
                 }
                 return feedbackById;
             }
@@ -147,6 +149,7 @@ namespace PersonalProject.Services
                         feedbackList.DateTimeCreated = (DateTime)reader["DateTimeCreated"];
                         feedbackList.GoogleId = reader["GoogleId"] as string;
                         feedbackList.TotalRows = (int)reader["TotalRows"];
+                        feedbackList.ImageUrl = reader["ImageUrl"] as string;
                         feedbackLists.Add(feedbackList);
                     }
                     return feedbackLists;
@@ -170,6 +173,7 @@ namespace PersonalProject.Services
                 cmd.Parameters.AddWithValue("@OverallPresentation", req.OverallPresentation);
                 cmd.Parameters.AddWithValue("@TopicSelection", req.TopicSelection);
                 cmd.Parameters.AddWithValue("@Feedback", req.Feedback);
+                cmd.Parameters.AddWithValue("@ImageUrl", req.ImageUrl);
 
                 cmd.ExecuteNonQuery();
             }
@@ -191,6 +195,7 @@ namespace PersonalProject.Services
                 cmd.Parameters.AddWithValue("@TopicSelection", req.TopicSelection);
                 cmd.Parameters.AddWithValue("@Feedback", req.Feedback);
                 cmd.Parameters.AddWithValue("@GoogleId", req.GoogleId);
+                cmd.Parameters.AddWithValue("@ImageUrl", req.ImageUrl);
 
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
 

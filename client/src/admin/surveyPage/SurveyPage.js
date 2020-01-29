@@ -21,14 +21,8 @@ class SurveyPage extends React.Component {
       user.image = profile.getImageUrl();
       user.email = profile.getEmail();
       user.id_token = googleUser.getAuthResponse().id_token;
-      // console.log("ID: " + profile.getId()); // AKA: oAuthId. Do not send to your backend! Use an ID token instead.
-      // console.log("Name: " + profile.getName());
-      // console.log("Image URL: " + profile.getImageUrl());
-      // console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-      // console.log("var id_token = " + googleUser.getAuthResponse().id_token);
       authenticateUser(user.id_token, user.id).then(
         res => {
-          console.log(res);
           this.props.setUser(user);
         },
         err => console.error(err)

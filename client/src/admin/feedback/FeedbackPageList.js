@@ -24,15 +24,22 @@ class FeedbackPageList extends React.Component {
   };
   prefix = this.props.match.path;
   componentDidMount() {
-    getFeedBacks(this.state.pageIndex, 5)
-      .then(res => {
-        const { Item } = res.data;
-        this.setState({
-          feedbackList: Item.reverse(),
-          totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize)
-        });
-      })
-      .catch(err => console.error("an error"));
+    if (Object.keys(this.props.user).length === 0) {
+      this.props.history.push("/");
+      window.open("/", "_self");
+    } else {
+      getFeedBacks(this.state.pageIndex, 5)
+        .then(res => {
+          const { Item } = res.data;
+          if (Item.length !== 0) {
+            this.setState({
+              feedbackList: Item.reverse(),
+              totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize)
+            });
+          }
+        })
+        .catch(err => console.error(err));
+    }
   }
   updateFeedback = id => {
     this.props.setRepopulateForm(true);
@@ -48,12 +55,12 @@ class FeedbackPageList extends React.Component {
           .then(res => {
             const { Item } = res.data;
             this.setState({
-              feedbackList: Item.reverse(),
-              totalPages: Math.ceil(Item[0].TotalRows / this.state.pageSize),
+              feedbackList: Item.length ? Item.reverse() : [],
+              totalPages: Item.length ? Math.ceil(Item[0].TotalRows / this.state.pageSize) : 0,
               id: null
             });
           })
-          .catch(err => console.error("an error"));
+          .catch(err => console.error(err));
       })
       .catch(err => console.error(err));
     this.setState({ isOpen: false });
@@ -62,7 +69,7 @@ class FeedbackPageList extends React.Component {
     this.setState({ isOpen: false });
   };
   searchForFeedbacks = q => {
-    searchFeedbacks(0, 10, q)
+    searchFeedbacks(0, 5, q)
       .then(res => this.setState({ feedbackList: res.data.Item }))
       .catch(err => console.error(err));
   };
@@ -113,66 +120,71 @@ class FeedbackPageList extends React.Component {
             <ul className="list-unstyled" id="feedbackUl">
               {feedbackList.length
                 ? feedbackList.map(data => (
-                    <li className="media" key={data.Id} id="feedbackListItem">
+                  <li className="media" key={data.Id} id="feedbackListItem">
+                    <div className="imageContainer">
                       <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCoVICaoWv740_veT03awpbxglZ1nXyyAZPPJno9B7uAybDCfr"
-                        className="mr-3"
+                        src={
+                          data.ImageUrl ||
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCoVICaoWv740_veT03awpbxglZ1nXyyAZPPJno9B7uAybDCfr"
+                        }
+                        className={`mr-3 ${data.ImageUrl &&
+                          "rotate90"} imageResize`}
                         alt="..."
                       />
-                      <div className="media-body">
-                        <h4 className="mt-0 mb-1">
-                          Presented:{" "}
-                          <span className="spanTextShadow">
-                            {data.FullNameOfPresenter}
-                          </span>
-                          , Cohort:{" "}
-                          <span className="spanTextShadow">
-                            {data.PresenterCohort}
-                          </span>
-                          ,{" "}
-                          {moment(data.DateTimeCreated).format(
-                            "MMMM Do YYYY, h:mm:ss a"
-                          )}
-                        </h4>
-                        <h5 className="mt-0 mb-1">
-                          Provided Feedback:{" "}
-                          <span className="spanTextShadow">
-                            {data.FullNameOfEvaluator}
-                          </span>
-                        </h5>
-                        <h5 className="mt-0 mb-1">
-                          Overall Presentation Score:{" "}
-                          <span className="spanTextShadow">
-                            {data.OverallPresentation}
-                          </span>
-                        </h5>
-                        <h5 className="mt-0 mb-1">
-                          Topic Selection Score:{" "}
-                          <span className="spanTextShadow">
-                            {data.TopicSelection}
-                          </span>
-                        </h5>
-                        <p>{data.Feedback}</p>
-                        {console.log(data.GoogleId, this.props.user.id)}
-                        {data.GoogleId === this.props.user.id && (
-                          <React.Fragment>
-                            <button
-                              className="box-shadow-2 btn btn-secondary feedbackListBtn"
-                              onClick={() => updateFeedback(data.Id)}
-                            >
-                              <FontAwesomeIcon icon="edit" />
-                            </button>
-                            <button
-                              className="box-shadow-2 btn btn-secondary feedbackListBtn"
-                              onClick={() => deleteFeedbackModal(data.Id)}
-                            >
-                              <FontAwesomeIcon icon="trash-alt" />
-                            </button>
-                          </React.Fragment>
+                    </div>
+                    <div className="media-body">
+                      <h4 className="mt-0 mb-1">
+                        Presented:{" "}
+                        <span className="spanTextShadow">
+                          {data.FullNameOfPresenter}
+                        </span>
+                        , Cohort:{" "}
+                        <span className="spanTextShadow">
+                          {data.PresenterCohort}
+                        </span>
+                        ,{" "}
+                        {moment(data.DateTimeCreated).format(
+                          "MMMM Do YYYY, h:mm:ss a"
                         )}
-                      </div>
-                    </li>
-                  ))
+                      </h4>
+                      <h5 className="mt-0 mb-1">
+                        Provided Feedback:{" "}
+                        <span className="spanTextShadow">
+                          {data.FullNameOfEvaluator}
+                        </span>
+                      </h5>
+                      <h5 className="mt-0 mb-1">
+                        Overall Presentation Score:{" "}
+                        <span className="spanTextShadow">
+                          {data.OverallPresentation}
+                        </span>
+                      </h5>
+                      <h5 className="mt-0 mb-1">
+                        Topic Selection Score:{" "}
+                        <span className="spanTextShadow">
+                          {data.TopicSelection}
+                        </span>
+                      </h5>
+                      <p>{data.Feedback}</p>
+                      {data.GoogleId === this.props.user.id && (
+                        <React.Fragment>
+                          <button
+                            className="box-shadow-2 btn btn-secondary feedbackListBtn"
+                            onClick={() => updateFeedback(data.Id)}
+                          >
+                            <FontAwesomeIcon icon="edit" />
+                          </button>
+                          <button
+                            className="box-shadow-2 btn btn-secondary feedbackListBtn"
+                            onClick={() => deleteFeedbackModal(data.Id)}
+                          >
+                            <FontAwesomeIcon icon="trash-alt" />
+                          </button>
+                        </React.Fragment>
+                      )}
+                    </div>
+                  </li>
+                ))
                 : null}
             </ul>
           </div>
@@ -187,7 +199,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setRepopulateForm: repopulateForm =>
-      dispatch({ type: "SET_REPOPULATE_FORM", repopulateForm })
+      dispatch({ type: "SET_REPOPULATE_FORM", repopulateForm }),
+    setUser: user => dispatch({ type: "SET_USER", user })
   };
 }
 export default connect(

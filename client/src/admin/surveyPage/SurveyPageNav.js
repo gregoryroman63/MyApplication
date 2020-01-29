@@ -1,12 +1,12 @@
 import React from "react";
 import { Collapse, NavbarToggler, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import "./SurveyNavBar.css";
+import "./SurveyPageNav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-class SurveyNavBar extends React.Component {
+class SurveyPageNav extends React.Component {
   constructor(props) {
     super(props);
 
@@ -33,7 +33,6 @@ class SurveyNavBar extends React.Component {
     e.preventDefault();
     var auth2 = window.gapi.auth2.getAuthInstance();
     auth2.signOut().then(function() {
-      console.log("User signed out.");
     });
     this.props.setUser({});
     window.open("/", "_self");
@@ -44,7 +43,17 @@ class SurveyNavBar extends React.Component {
     return (
       <React.Fragment>
         <div>
-          <nav className="navbar navbar-expand-md" id="navBar">
+          <nav className="navbar navbar-expand-md" id="surveyPageNav">
+            <img
+              src={
+                this.props.user.image ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCoVICaoWv740_veT03awpbxglZ1nXyyAZPPJno9B7uAybDCfr"
+              }
+              id="userImage"
+              alt="User"
+            />
+            <span id="welcome">Welcome,</span>
+            <span id="userName">{this.props.user.name}</span>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
@@ -58,7 +67,7 @@ class SurveyNavBar extends React.Component {
                     Cohorts
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem className="navItemHome">
                   <NavLink to={"/"} className="navLinks" onClick={this.signOut}>
                     SignOut
                   </NavLink>
@@ -67,7 +76,7 @@ class SurveyNavBar extends React.Component {
                   <div className="input-group col-md-12">
                     <span className="input-group-append">
                       <button
-                        id="searchBtn"
+                        id="searchBtnPage"
                         className="btn btn-outline-secondary"
                         type="submit"
                         onClick={searchOnClick}
@@ -90,7 +99,12 @@ function mapDispatchToProps(dispatch) {
     setUser: user => dispatch({ type: "SET_USER", user })
   };
 }
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(withRouter(SurveyNavBar));
+)(withRouter(SurveyPageNav));

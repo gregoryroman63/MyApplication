@@ -8,41 +8,44 @@ import {
   updateFeedback
 } from "./../../services/SurveyForm.service.js";
 import { connect } from "react-redux";
+import ImageUpload from "./../../shared/ImageUpload";
 
 class SurveyForm extends React.Component {
   state = {
     fullNameOfEvaluator: "",
     fullNameOfPresenter: "",
-    //email: "",
+    email: "no",
     presenterCohort: "",
     overallPresentation: "3",
     topicSelection: "3",
     feedback: "",
-    id: null
+    id: null,
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/fir-feedback-76914.appspot.com"
   };
   componentDidMount() {
     if (this.props.repopulateForm) {
       getFeedBackById(this.props.match.params.id)
         .then(res => {
           const {
-            //Email,
             Feedback,
             FullNameOfEvaluator,
             FullNameOfPresenter,
             Id,
             OverallPresentation,
             PresenterCohort,
-            TopicSelection
+            TopicSelection,
+            ImageUrl
           } = res.data.Item;
           this.setState({
             fullNameOfEvaluator: FullNameOfEvaluator,
             fullNameOfPresenter: FullNameOfPresenter,
-            //email: Email,
             presenterCohort: PresenterCohort,
             overallPresentation: OverallPresentation,
             topicSelection: TopicSelection,
             feedback: Feedback,
-            id: Id
+            id: Id,
+            imageUrl: ImageUrl
           });
         })
         .catch(err => console.error(err));
@@ -52,32 +55,33 @@ class SurveyForm extends React.Component {
     this.setState({
       fullNameOfEvaluator: "",
       fullNameOfPresenter: "",
-      //email: "",
+      email: false,
       presenterCohort: "",
       overallPresentation: "3",
       topicSelection: "3",
-      feedback: ""
+      feedback: "",
+      imageUrl: ""
     });
   };
   submitFeedback = () => {
     const {
       fullNameOfEvaluator,
       fullNameOfPresenter,
-      //email,
       presenterCohort,
       overallPresentation,
       topicSelection,
       feedback,
-      id
+      id,
+      imageUrl
     } = this.state;
     const payload = {
       fullNameOfEvaluator,
       fullNameOfPresenter,
-      //email,
       presenterCohort,
       overallPresentation,
       topicSelection,
-      feedback
+      feedback,
+      imageUrl
     };
     if (this.props.repopulateForm) {
       payload.id = id;
@@ -117,17 +121,22 @@ class SurveyForm extends React.Component {
   handleInputs = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  getImage = imageUrl => {
+    if (imageUrl) {
+      this.setState({ imageUrl });
+    }
+  };
   render() {
     const {
       fullNameOfEvaluator,
       fullNameOfPresenter,
-      //email,
+      email,
       presenterCohort,
       topicSelection,
       overallPresentation,
       feedback
     } = this.state;
-    const { handleInputs, submitFeedback, cancel } = this;
+    const { handleInputs, submitFeedback, cancel, getImage } = this;
     return (
       <React.Fragment>
         <div className="row match-height">
@@ -155,98 +164,99 @@ class SurveyForm extends React.Component {
                             placeholder="Full Name Of Evaluator"
                           />
                         </div>
-                        {/* <div className="form-group col-md-12 mb-2 ">
-                          <label className="labels" htmlFor="email">
-                            Email{" "}
-                            <span id="emailMessage">
-                              *Only Required if you would like a copy of this
-                              survey
-                            </span>
-                          </label>
-                          <input
-                            name="email"
-                            value={email}
-                            onChange={handleInputs}
-                            type="text"
-                            placeholder="Email"
-                            className="form-control surveyInputs"
-                          />
-                        </div> */}
-                        <div className="form-group col-md-12 mb-2">
-                          <label
-                            className="labels"
-                            htmlFor="fullNameOfPresenter"
-                          >
-                            Full Name Of Presenter
-                          </label>
-                          <input
-                            name="fullNameOfPresenter"
-                            value={fullNameOfPresenter}
-                            onChange={handleInputs}
-                            type="text"
-                            placeholder="Full Name Of Presenter"
-                            className="form-control surveyInputs"
-                          />
+                        <div className="row presenterInputs">
+                          <div className="col-lg-6">
+                            <div className="form-group col-md-12 mb-2">
+                              <label
+                                className="labels"
+                                htmlFor="fullNameOfPresenter"
+                              >
+                                Full Name Of Presenter
+                              </label>
+                              <input
+                                name="fullNameOfPresenter"
+                                value={fullNameOfPresenter}
+                                onChange={handleInputs}
+                                type="text"
+                                placeholder="Full Name Of Presenter"
+                                className="form-control surveyInputs"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-lg-6">
+                            <div className="form-group col-md-12 mb-2">
+                              <label
+                                className="labels"
+                                htmlFor="presenterCohort"
+                              >
+                                Cohort Of Presenter
+                              </label>
+                              <input
+                                name="presenterCohort"
+                                value={presenterCohort}
+                                onChange={handleInputs}
+                                type="text"
+                                placeholder="Cohort Of Presenter"
+                                className="form-control surveyInputs"
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div className="form-group col-md-12 mb-2">
-                          <label className="labels" htmlFor="presenterCohort">
-                            Cohort Of Presenter
-                          </label>
-                          <input
-                            name="presenterCohort"
-                            value={presenterCohort}
-                            onChange={handleInputs}
-                            type="text"
-                            placeholder="Cohort Of Presenter"
-                            className="form-control surveyInputs"
-                          />
-                        </div>
-                        <div className="form-group col-md-12 mb-2">
-                          <label
-                            className="labels"
-                            htmlFor="overallPresentation"
-                          >
-                            Overall Presentation ( Range:{" "}
-                            <span className="range">
-                              1 = Poor --- 5 = Excellent
-                            </span>{" "}
-                            )
-                          </label>
-                          <select
-                            className="form-control surveyInputs"
-                            name="overallPresentation"
-                            value={overallPresentation}
-                            onChange={handleInputs}
-                          >
-                            <option value="3">3</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                          </select>
-                        </div>
-                        <div className="form-group col-md-12 mb-2">
-                          <label className="labels" htmlFor="topicSelection">
-                            Topic Selection ( Range:{" "}
-                            <span className="range">
-                              1 = Poor --- 5 = Excellent
-                            </span>{" "}
-                            )
-                          </label>
-                          <select
-                            className="form-control surveyInputs"
-                            name="topicSelection"
-                            value={topicSelection}
-                            onChange={handleInputs}
-                          >
-                            <option value="3">3</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                          </select>
+                        <div className="row presenterInputs">
+                          <div className="col-lg-6">
+                            <div className="form-group col-md-12 mb-2">
+                              <label
+                                className="labels"
+                                htmlFor="overallPresentation"
+                              >
+                                Presentation ({" "}
+                                <span className="range">
+                                  1 = Poor...5 = Excellent
+                                </span>{" "}
+                                )
+                              </label>
+                              <select
+                                className="form-control surveyInputs"
+                                name="overallPresentation"
+                                value={overallPresentation}
+                                onChange={handleInputs}
+                              >
+                                <option value="3">3</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-lg-6">
+                            <div className="form-group col-md-12 mb-2">
+                              <label
+                                className="labels"
+                                htmlFor="topicSelection"
+                              >
+                                Topic Selection ({" "}
+                                <span className="range">
+                                  1 = Poor...5 = Excellent
+                                </span>{" "}
+                                )
+                              </label>
+                              <select
+                                className="form-control surveyInputs"
+                                name="topicSelection"
+                                value={topicSelection}
+                                onChange={handleInputs}
+                              >
+                                <option value="3">3</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
                         <div className="form-group col-md-12 mb-2">
                           <label className="labels" htmlFor="feedback">
@@ -262,6 +272,53 @@ class SurveyForm extends React.Component {
                             placeholder="Feedback"
                           />
                         </div>
+                        <div className="form-group col-md-6 mb-2">
+                          <label className="labels" htmlFor="feedback">
+                            Upload Image Of Presenter
+                          </label>
+                          <ImageUpload imageUrl={getImage} />
+                        </div>
+                        <div className="form-group col-md-6 mb-2">
+                          <label className="labels" htmlFor="feedback">
+                            Would You Like To Receive A Copy Of This Feedback
+                            Via Email?
+                          </label>
+                          <div className="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              className="custom-control-input"
+                              id="defaultUnchecked"
+                              name="email"
+                              value="yes"
+                              onChange={handleInputs}
+                              checked={email === "yes"}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor="defaultUnchecked"
+                            >
+                              Yes
+                            </label>
+                          </div>
+                          <div className="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              className="custom-control-input"
+                              id="defaultChecked"
+                              name="email"
+                              value="no"
+                              onChange={handleInputs}
+                              checked={email === "no"}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor="defaultChecked"
+                            >
+                              No
+                            </label>
+                          </div>
+                        </div>
+
                         <div className="form-group col-md-12 mb-2">
                           <div id="feedbackButton">
                             <button
